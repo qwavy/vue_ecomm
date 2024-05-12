@@ -3,14 +3,14 @@
 import ProductCard from "./ProductCard.vue";
 import {onMounted, ref, watch} from "vue";
 import axios from "axios";
-import {getFavouritesProducts} from "../api/api.js";
+import {getAddedProducts} from "../api/api.js";
 const products = ref([])
 
 onMounted(async () => {
-  products.value = await getFavouritesProducts()
+  products.value = await getAddedProducts(1,"http://localhost:3000/favourites/userFavourites")
 })
 watch(products , async () => {
-  products.value = await getFavouritesProducts()
+  products.value = await getAddedProducts(1,"http://localhost:3000/favourites/userFavourites")
 
 })
 </script>

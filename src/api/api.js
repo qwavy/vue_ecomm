@@ -13,9 +13,9 @@ export async function getProducts  (sortMethod = "" , searchValue = "")  {
     }
 }
 
-export async function getFavouritesProducts  (id = 1)  {
+export async function getAddedProducts  (userId = 1,url)  {
     try{
-        const data = await axios.get(`http://localhost:3000/favourites/userFavourites1`)
+        const data = await axios.get(`${url}/${userId}`)
         return data.data
     }
     catch (e){
@@ -24,16 +24,7 @@ export async function getFavouritesProducts  (id = 1)  {
     }
 }
 
-export async function getCartProducts (id = 1){
-    try{
-        const data = await axios.get(`http://localhost:3000/carts/userCart/1`)
-        return data.data
-    }
-    catch (e){
-        console.log(e)
-        throw e
-    }
-}
+
 
 export async function checkProductAdded (userId = 1,productName){
     try {
@@ -52,12 +43,10 @@ export async function checkProductAdded (userId = 1,productName){
 
 export async function checkProductAddedCart (userId = 1,productId){
     try {
-
         const data = await getCartProducts(userId)
         const arr = data.filter((el) => el.productid == productId)
         console.log(data)
         return !!arr.length
-
     }
     catch (e){
         throw e

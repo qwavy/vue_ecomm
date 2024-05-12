@@ -3,15 +3,15 @@
 import ProductCard from "./ProductCard.vue";
 import {onMounted, ref, watch} from "vue";
 import axios from "axios";
-import {getCartProducts} from "../api/api.js";
+import {getAddedProducts} from "../api/api.js";
 const products = ref([])
 
 onMounted(async () => {
-  products.value = await getCartProducts()
+  products.value = await getAddedProducts()
 
 })
 watch(products , async () => {
-  products.value = await getCartProducts()
+  products.value = await getAddedProducts()
 
 })
 </script>
