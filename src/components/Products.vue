@@ -22,7 +22,6 @@ watch(sortMethod , async () => {
 watch(searchValue , async () => {
   searchValue.value = searchValue.value.toLowerCase()
   if(!sortMethod.value){
-    console.log("sd")
     products.value = await getProducts(`` , `/?searchValue=${searchValue.value}`)
   }else{
 

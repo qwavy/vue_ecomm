@@ -7,13 +7,11 @@ import {getAddedProducts} from "../api/api.js";
 const products = ref([])
 
 onMounted(async () => {
-  products.value = await getAddedProducts()
-
+  products.value = await getAddedProducts(1,"http://localhost:3000/carts/userCart")
 })
-watch(products , async () => {
-  products.value = await getAddedProducts()
-
-})
+// watch(products , async () => {
+//   products.value = await getAddedProducts(1,"http://localhost:3000/carts/userCart")
+// })
 </script>
 
 <template>

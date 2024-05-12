@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref, watch, watchEffect} from "vue";
 import axios from "axios";
-import {checkProductAdded, checkProductAddedCart} from "../api/api.js";
+import {checkProductAdded} from "../api/api.js";
 import {Toaster, toast} from 'vue-sonner'
 import {errorNotify, successNotify} from "../toasts/toasts.js";
 
@@ -16,14 +16,14 @@ const props = defineProps({
 const localIsAdded = ref(props.isAdded)
 const localIsFavourite = ref(props.isFavourite)
 
-const addToFavourites = async (id, name = "") => {
+const addToFavourites = async (productId, name = "") => {
 
 
   localIsFavourite.value = !localIsFavourite.value
 
 
   if (localIsFavourite.value) {
-    if (await checkProductAdded(1, name)) {
+    if (await checkProductAdded(1, productId,"http://localhost:3000/favourites/userFavourites")) {
       localIsFavourite.value = !localIsFavourite.value
       return errorNotify("Этот продукт уже есть в закладках")
     }
@@ -31,14 +31,15 @@ const addToFavourites = async (id, name = "") => {
       userId: 1,
       name: props.name,
       price: props.price,
-      img: props.img
+      img: props.img,
+      productId:productId
     })
         .catch((err) => console.log(err))
     return successNotify("Товар успешно в закладках")
 
   } else {
 
-    axios.delete(`http://localhost:3000/favourites/userFavourites/1/${id}`)
+    axios.delete(`http://localhost:3000/favourites/userFavourites/1/${productId}`)
         .catch((err) => console.log(err))
     return successNotify("Товар успешно удален")
   }
@@ -47,11 +48,12 @@ const addToFavourites = async (id, name = "") => {
 }
 
 const addToCart = async (productId) => {
+  console.log("clicked")
   localIsAdded.value = !localIsAdded.value
   console.log(productId)
 
   if (localIsAdded.value) {
-    if (await checkProductAddedCart(1, productId)) {
+    if (await checkProductAdded(1, productId,"http://localhost:3000/carts/userCart")) {
       localIsAdded.value = !localIsAdded.value
       return errorNotify("Этот продукт уже есть в корзине")
     }

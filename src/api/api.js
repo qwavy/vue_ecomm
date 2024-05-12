@@ -26,26 +26,37 @@ export async function getAddedProducts  (userId = 1,url)  {
 
 
 
-export async function checkProductAdded (userId = 1,productName){
+// export async function checkProductAdded (userId = 1,productName){
+//     try {
+//
+//         const data = await getFavouritesProducts(userId)
+//         const arr = data.filter((el) => el.name == productName)
+//         return !!arr.length
+//
+//     }
+//     catch (e){
+//         throw e
+//     }
+//
+//
+// }
+//
+// export async function checkProductAddedCart (userId = 1,productId){
+//     try {
+//         const data = await getCartProducts(userId)
+//         const arr = data.filter((el) => el.productid == productId)
+//         return !!arr.length
+//     }
+//     catch (e){
+//         throw e
+//     }
+// }
+
+export async function checkProductAdded(userId = 1,productId,url){
     try {
-
-        const data = await getFavouritesProducts(userId)
-        const arr = data.filter((el) => el.name == productName)
-        return !!arr.length
-
-    }
-    catch (e){
-        throw e
-    }
-
-
-}
-
-export async function checkProductAddedCart (userId = 1,productId){
-    try {
-        const data = await getCartProducts(userId)
-        const arr = data.filter((el) => el.productid == productId)
+        const data = await getAddedProducts(userId,url)
         console.log(data)
+        const arr = data.filter((el) => el.productId === productId)
         return !!arr.length
     }
     catch (e){
